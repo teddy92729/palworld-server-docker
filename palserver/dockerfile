@@ -1,0 +1,16 @@
+FROM cm2network/steamcmd:root
+
+USER steam
+
+RUN ./steamcmd.sh +login anonymous +app_update 2394010 validate +quit
+
+#expose default ports
+EXPOSE 8211/udp
+
+#update server at the container startup 
+COPY --chown=steam startup.sh .
+RUN chmod +x startup.sh
+CMD [ "sh","-c","./startup.sh"]
+
+
+

@@ -1,0 +1,29 @@
+services:
+
+    ofelia:
+        image: mcuadros/ofelia:latest
+        depends_on:
+            - palserver
+        restart: always
+        command: daemon --docker
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    palserver:
+        build: palserver
+        restart: always
+        ports:
+            - 8211:8211/udp
+        volumes:
+            - ./backup:/home/steam/backup
+            - ./saved:/home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+        labels:
+            ofelia.enabled: "true"
+            ofelia.job-exec.backup.schedule: "@every 15m"
+            ofelia.job-exec.backup.command: bash -c "cd /home/steam/backup; tar -zcf saved-$(TZ='Asia/Taipei' date +'%y%m%d_%H-%M').tar.gz -C /home/steam/Steam/steamapps/common/PalServer/Pal/Saved Config SaveGames;"
+            ofelia.job-exec.expire3d_backup.schedule: "@daily"
+            ofelia.job-exec.expire3d_backup.command: bash -c "cd /home/steam/backup; find /home/steam/backup -mtime +3 -exec rm {} \;;"
+        deploy:
+            resources:
+                limits:
+                    cpus: "3.0"
