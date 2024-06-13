@@ -19,7 +19,9 @@ if [ ! -d "/home/steam/Steam/steamapps/common/PalServer/Pal/Saved" ]; then
 fi
 cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
 if [ $CHECKOUT ]; then
-    git pull origin $CHECKOUT
+    echo "restore backup to $CHECKOUT"
+    git pull origin master
+    git checkout $CHECKOUT
 fi
 ################
 
