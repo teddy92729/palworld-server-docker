@@ -18,8 +18,8 @@ if [ ! -d "/home/steam/Steam/steamapps/common/PalServer/Pal/Saved" ]; then
     fi
 fi
 cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
-if [ -z $CHECKOUT ]; then
-    git checkout $CHECKOUT
+if [ $CHECKOUT ]; then
+    git pull origin $CHECKOUT
 fi
 ################
 
