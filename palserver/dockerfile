@@ -1,5 +1,9 @@
 FROM cm2network/steamcmd:root
 
+# use git to backup the server
+# comment out the line below if you don't want to use git
+RUN apt update && apt install -y git
+
 USER steam
 
 RUN ./steamcmd.sh +login anonymous +app_update 2394010 validate +quit
@@ -8,9 +12,9 @@ RUN ./steamcmd.sh +login anonymous +app_update 2394010 validate +quit
 EXPOSE 8211/udp
 
 #update server at the container startup 
-COPY --chown=steam startup.sh .
-RUN chmod +x startup.sh
-CMD [ "sh","-c","./startup.sh"]
+COPY --chown=steam --chmod=770 startup.sh .
+
+CMD [ "bash","-c","./startup.sh"]
 
 
 

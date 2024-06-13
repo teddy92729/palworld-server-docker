@@ -1,0 +1,27 @@
+#!/bin/bash
+
+ROOT_DIR=$(pwd)
+
+# Create backup directory
+mkdir backup
+mkdir tmp
+
+# Create bare git repository
+cd $ROOT_DIR/backup
+git init --bare .git
+
+# commit default settings to backup repository
+cd $ROOT_DIR/tmp
+git clone $ROOT_DIR/backup
+mkdir -p backup/Config/LinuxServer
+cp $ROOT_DIR/DefaultPalWorldSettings.ini backup/Config/LinuxServer/PalWorldSettings.ini
+
+cd $ROOT_DIR/tmp/backup
+git add .
+git commit -m "Initial commit"
+git push origin master
+
+# cleanup
+cd $ROOT_DIR
+rm -rf tmp
+

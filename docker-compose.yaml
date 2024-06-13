@@ -16,13 +16,13 @@ services:
             - 8211:8211/udp
         volumes:
             - ./backup:/home/steam/backup
-            - ./saved:/home/steam/Steam/steamapps/common/PalServer/Pal/Saved
+        environment:
+            - CHECKOUT=
+            - TZ=Asia/Taipei
         labels:
             ofelia.enabled: "true"
             ofelia.job-exec.backup.schedule: "@every 15m"
-            ofelia.job-exec.backup.command: bash -c "cd /home/steam/backup; tar -zcf saved-$(TZ='Asia/Taipei' date +'%y%m%d_%H-%M').tar.gz -C /home/steam/Steam/steamapps/common/PalServer/Pal/Saved Config SaveGames;"
-            ofelia.job-exec.expire3d_backup.schedule: "@daily"
-            ofelia.job-exec.expire3d_backup.command: bash -c "cd /home/steam/backup; find /home/steam/backup -mtime +3 -exec rm {} \;;"
+            ofelia.job-exec.backup.command: su steam -c "bash -c 'cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved ; git add . ; git commit -m \"Auto Backup\" ; git push -u origin master'"
         deploy:
             resources:
                 limits:
