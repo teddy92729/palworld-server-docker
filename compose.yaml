@@ -21,7 +21,7 @@ services:
         labels:
             ofelia.enabled: "true"
             ofelia.job-exec.backup.schedule: "@every 15m"
-            ofelia.job-exec.backup.command: su steam -c "bash -c 'cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved ; git add . ; git commit -m \"Auto Backup\" ; git push -u origin master'"
+            ofelia.job-exec.backup.command: su steam -c "bash -c 'cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved ; git add . ; git commit -m \"Auto Backup\" ; git push origin master'"
         deploy:
             resources:
                 limits:
