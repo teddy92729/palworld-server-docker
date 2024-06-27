@@ -7,6 +7,8 @@ services:
         command: daemon --docker
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
+        environment:
+            - TZ=Asia/Taipei
 
     palserver:
         build: palserver
@@ -21,7 +23,7 @@ services:
         labels:
             ofelia.enabled: "true"
             ofelia.job-exec.backup.schedule: "@every 15m"
-            ofelia.job-exec.backup.command: su steam -c "bash -c 'cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved ; git add . ; git commit -m \"Auto Backup\" ; git push origin master'"
+            ofelia.job-exec.backup.command: su steam -c "bash -c 'cd ~ ; ./backup.sh'"
         deploy:
             resources:
                 limits:

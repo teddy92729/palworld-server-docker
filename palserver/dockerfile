@@ -13,6 +13,7 @@ EXPOSE 8211/udp
 
 #update server at the container startup 
 COPY --chown=steam --chmod=770 startup.sh .
+COPY --chown=steam --chmod=770 backup.sh /home/steam
 
 CMD [ "bash","-c","./startup.sh"]
 

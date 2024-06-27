@@ -10,11 +10,9 @@ mkdir tmp
 cd $ROOT_DIR/backup
 git init --bare 
 git config core.logAllRefUpdates true
-git config gc.reflogExpire "3 days ago"
-git config gc.reflogExpireUnreachable "3 days ago"
-git config gc.logExpire "3 days ago"
-git config gc.pruneExpire "3 days ago"
-
+git config gc.auto 500
+git config gc.reflogExpire "3 days"
+git config gc.reflogExpireUnreachable "3 days"
 
 # commit default settings to backup repository
 cd $ROOT_DIR/tmp

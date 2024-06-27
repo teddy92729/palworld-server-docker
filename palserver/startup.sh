@@ -14,7 +14,8 @@ if [ ! -d "/home/steam/Steam/steamapps/common/PalServer/Pal/Saved" ]; then
         git config user.email '<>'
         git remote add origin ~/backup
         git pull origin master
-        echo '*.sav binary'> .gitattributes
+        # binary file is not useful for small file
+        # echo '*.sav binary'> .gitattributes
     fi
 fi
 cd /home/steam/Steam/steamapps/common/PalServer/Pal/Saved
